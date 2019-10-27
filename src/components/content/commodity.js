@@ -10,45 +10,48 @@ import Typography from '@material-ui/core/Typography';
 
 import {connect} from 'react-redux';
 import {doBuyCommodity} from '../../store/ShopCarState';
-import {actionCreator} from '../../storeAction'
+import {actionCreator} from '../../storeAction';
+// import img from '../../../public/assets/imgs/1138.jpg';
 const useStyles = makeStyles({
   card: {
     maxWidth: 345,
+    height:410,
     width:'100%'
   },
   media: {
-    height: 140,
+    height: 250,
   },
+  intro:{
+    height:40,
+  }
 });
 
- function MediaCard({doBuyCommodity,...props}) {
+ function MediaCard({doBuyCommodity,isSidebarOpened,...props}) {
   const classes = useStyles();
-//   const url=`../../../assets/imgs/${props.id}.jpg`
   return (
-    // {id:1128,name:'冰霜长茅',intro:'普通攻击会减少目标攻速和移速，远程英雄为1s',price:220},
     <Card className={classes.card}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image="../../../assets/imgs/1138.jpg"
+          image={require(`../../assets/imgs/${props.id}.jpg`)}
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {props.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography className={classes.intro}  variant="body2" color="textSecondary" component="p">
             {props.intro}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary" onClick={()=>{doBuyCommodity(actionCreator('BUY',props))}}>
+        <Button size="small" color="primary" onClick={()=>{doBuyCommodity(actionCreator('TOCAR',props))}}>
           加入购物车
         </Button>
-        {/* <Button size="small" color="primary">
-          Learn More
-        </Button> */}
+        <Button size="small" color="primary">
+          立即购买
+        </Button>
         <div style={{display:'flex',flexGrow:1}}/>
         <Typography gutterBottom variant="h6" component="h6">
             价格：<span style={{color:'red'}}>{props.price}</span>
