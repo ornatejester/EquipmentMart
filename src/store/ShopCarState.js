@@ -8,6 +8,7 @@ export const initialState = {
 
   export const TOCAR = "TOCAR";
   export const REMOVE = "REMOVE";
+  export const REDUCER_ORDER = "REDUCER_ORDER";
   
   // 根据唯一标识符移除商品
   const removeCommodity = function(arr,x){
@@ -18,15 +19,26 @@ export const initialState = {
       });
     return arrNew;
   }
+  // 根据唯一标识符移除商品
+  const removeCommodityList = function(arr,arrReduce){
+        var arrNew=arr;
+        arrReduce.forEach(element => {   
+          arrNew=removeCommodity(arrNew,element);
+        })
+    return arrNew;
+  }
 
   export const doBuyCommodity = (action) => dispatch => {
         dispatch(action);
   }
   export const doRemoveCommodity = (action) => dispatch => {
         dispatch(action);
+  }
+  export const reduceOrder = (action) => dispatch => {
+        dispatch(action);
 }
   
-  export default function ShopReducer(state = initialState, commodity) {
+  export default function OrderReducer(state = initialState, commodity) {
     switch (commodity.type) {
       case TOCAR:
           const commodityNew={
@@ -42,7 +54,13 @@ export const initialState = {
         return {
           ...state,
           myCommodity: removeCommodity(state.myCommodity,commodity.commodity)
+        };
+      case REDUCER_ORDER:{
+        return {
+          ...state,
+          myCommodity: removeCommodityList(state.myCommodity,commodity.commodity)
         }
+      }
       default:
         return state;
     }

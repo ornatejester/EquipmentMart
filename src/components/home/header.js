@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
+    // color:'red'
   },
   grow: {
     flexGrow: 1

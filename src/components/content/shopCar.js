@@ -10,8 +10,14 @@ import Typography from '@material-ui/core/Typography';
 import {connect} from 'react-redux';
 import { Button, Checkbox } from '@material-ui/core';
 
-import {doRemoveCommodity} from '../../store/ShopCarState';
-import {actionCreator} from '../../storeAction';
+import {doRemoveCommodity,reduceOrder} from '../../store/ShopCarState';
+import {createOrder,createOrderDirect} from '../../store/MyOrderState';
+import {toggleSelect} from '../../store/LayoutState';
+
+import {actionCreator,orderActionCreator} from '../../storeAction';
+import PositionedSnackbar from './message';
+import {toggleNoSelect,toggleCreateOrder} from '../../store/MessageState'
+
 const StyledTableCell = withStyles(theme => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -42,19 +48,54 @@ const useStyles = makeStyles(theme => ({
   table: {
     minWidth: 700,
   },
+  button:{
+    marginLeft: theme.spacing(3),
+  }
 }));
 
-function ShopCar({myCommodity,doRemoveCommodity}) {
+function ShopCar(
+  {isSelectShow,
+    myCommodity,
+    createOrder,
+    createOrderDirect,
+    reduceOrder,
+    doRemoveCommodity,
+    toggleSelect,
+    noSelectCommedity,
+    createOrderSuccess,
+    toggleNoSelect,
+    toggleCreateOrder}
+  ) {
   const classes = useStyles();
-  // 这个数组不能定义在这里，需要放在reducer中
-  const wareHouse = [];
-  // console.log(wareHouse.length);
+  //临时存放多选框被选中的商品
+  let wareHouse = [];
   
   return (
     <React.Fragment>
+      <PositionedSnackbar open={noSelectCommedity} message={"请先选择物品"}></PositionedSnackbar>
+      <PositionedSnackbar open={createOrderSuccess} message={"购买成功！请到订单中查看"}></PositionedSnackbar>
       <Typography variant="h5" component="h4">
             我的购物车
-          {wareHouse.length===0?false:<Button color="primary">购买</Button>}
+      <Button color="primary" 
+      className={classes.button}
+      onClick={toggleSelect}>
+        批量编辑
+      </Button>
+      <Button variant="contained" color="secondary" 
+      className={classes.button}
+      onClick={()=>{
+          if(wareHouse.length>0){
+            createOrder(orderActionCreator("CREATE_ORDER",wareHouse));
+            reduceOrder(actionCreator("REDUCER_ORDER",wareHouse));
+            // toggleCreateOrder();
+            toggleSelect();
+            wareHouse = [];
+          }else{
+            toggleNoSelect();
+          }
+        }}>
+        立即购买
+      </Button>
       </Typography>
     <Paper className={classes.root}>
       <Table className={classes.table} aria-label="customized table">
@@ -71,6 +112,7 @@ function ShopCar({myCommodity,doRemoveCommodity}) {
           {myCommodity.map((commodity,index) => (
             <StyledTableRow key={index}>
               <StyledTableCell align="left">
+                {isSelectShow===true?
                 <Checkbox
                 onChange={(event)=>{
                   if(event.target.checked===true){
@@ -78,9 +120,9 @@ function ShopCar({myCommodity,doRemoveCommodity}) {
                   }else{
                       wareHouse.pop(commodity);
                   }
-                  // console.log(wareHouse.length);
-                }}
-                />
+                }}/>:index+1
+            }
+                
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
                 {commodity.name}
@@ -88,10 +130,17 @@ function ShopCar({myCommodity,doRemoveCommodity}) {
               <StyledTableCell align="center">{commodity.id}</StyledTableCell>
               <StyledTableCell align="center">{commodity.price}</StyledTableCell>
               <StyledTableCell align="right">
-              {/* <Button color='primary'>立即购买</Button> */}
+              <Button color='primary'
+              onClick={()=>{
+                // 添加到订单，移出购物车
+                createOrderDirect(orderActionCreator('CREATE_ORDER_DIRECT',[commodity]))
+                doRemoveCommodity(actionCreator('REMOVE',commodity))
+              }}
+              >立即购买</Button>
               <Button color='secondary' 
-              onClick={()=>{doRemoveCommodity(actionCreator('REMOVE',commodity))}}
-              >移出购物车</Button>
+              onClick={()=>{
+                doRemoveCommodity(actionCreator('REMOVE',commodity))
+              }}>移出购物车</Button>
               </StyledTableCell>
             </StyledTableRow>
           ))}
@@ -103,9 +152,18 @@ function ShopCar({myCommodity,doRemoveCommodity}) {
 }
 export default connect(
   state=>({
-    myCommodity:state.shop.myCommodity
+    myCommodity:state.shop.myCommodity,
+    isSelectShow:state.layout.isSelectShow,
+    noSelectCommedity:state.message.noSelectCommedity,
+    createOrderSuccess:state.message.createOrderSuccess
   }),
   {
     doRemoveCommodity,
+    reduceOrder,
+    createOrder,
+    createOrderDirect,
+    toggleCreateOrder,
+    toggleSelect,
+    toggleNoSelect
   }
 )(ShopCar)

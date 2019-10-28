@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -7,26 +8,34 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
 import {connect} from 'react-redux';
+
 import {doBuyCommodity} from '../../store/ShopCarState';
-import {actionCreator} from '../../storeAction';
-// import img from '../../../public/assets/imgs/1138.jpg';
+import {createOrderDirect} from '../../store/MyOrderState';
+import {toggleCreateOrder,toggleToCar} from '../../store/MessageState'
+import {actionCreator,orderActionCreator} from '../../storeAction';
 const useStyles = makeStyles({
   card: {
     maxWidth: 345,
-    height:410,
+    height:400,
     width:'100%'
   },
   media: {
-    height: 250,
+    height: 240,
   },
   intro:{
     height:40,
+    textAlign:'left'
   }
 });
 
- function MediaCard({doBuyCommodity,isSidebarOpened,...props}) {
+ function MediaCard({
+   doBuyCommodity,
+   isSidebarOpened,
+   createOrderDirect,
+   toggleCreateOrder,
+   toggleToCar,
+   ...props}) {
   const classes = useStyles();
   return (
     <Card className={classes.card}>
@@ -46,15 +55,21 @@ const useStyles = makeStyles({
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary" onClick={()=>{doBuyCommodity(actionCreator('TOCAR',props))}}>
+        <Button size="small" color="primary" onClick={()=>{
+            doBuyCommodity(actionCreator('TOCAR',props));
+            // toggleToCar()
+          }}>
           加入购物车
         </Button>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={()=>{
+            createOrderDirect(orderActionCreator('CREATE_ORDER_DIRECT',[props]));
+            // toggleCreateOrder();
+          }}>
           立即购买
         </Button>
         <div style={{display:'flex',flexGrow:1}}/>
-        <Typography gutterBottom variant="h6" component="h6">
-            价格：<span style={{color:'red'}}>{props.price}</span>
+        <Typography>
+            <span style={{color:'red'}}>{props.price}￥</span>
         </Typography>
       </CardActions>
     </Card>
@@ -64,5 +79,10 @@ export default connect(
   state=>({
     isSidebarOpened:state.layout.isSidebarOpened
   }),
-  {doBuyCommodity}
+  {
+    doBuyCommodity,
+    createOrderDirect,
+    toggleToCar,
+    toggleCreateOrder
+  }
 )(MediaCard)

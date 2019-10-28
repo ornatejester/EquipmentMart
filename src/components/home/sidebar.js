@@ -1,5 +1,4 @@
 import React from 'react';
-// import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -16,30 +15,12 @@ import MailIcon from '@material-ui/icons/Mail';
 import {connect} from 'react-redux';
 import {toggleSidebar} from '../../store/LayoutState';
 import {Link} from 'react-router-dom';
-const drawerWidth = 180;
+
+// import {classnames} from 'classnames'
+const drawerWidth = 200;
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-  },
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  hide: {
-    display: 'none',
   },
   drawer: {
     width: drawerWidth,
@@ -55,21 +36,22 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-  },
   contentShift: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 0,
+  },
+  listItemText:{
+    listStyle:'none'
+  },
+  link:{
+    textDecoration:'none',
+    color:'black'
+  },
+  active:{
+    backgroundColor:'skyblue'
   },
 }));
 
@@ -105,12 +87,15 @@ function Sidebar({toggleSidebar,isSidebarOpened}) {
         <Divider />
         <List>
           {menuList.map((text,index) => (
-              <Link to={text.link} key={text.id}>
-                <ListItem button >
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text.label} />
-            </ListItem>
-             </Link>
+              <Link to={text.link} key={text.id} className={classes.link}>
+                <ListItem 
+                // className={classes.active}
+                button >
+                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                  <ListItemText primary={text.label} />
+                </ListItem>
+                <Divider></Divider>
+              </Link>
           ))}
         </List>
       </Drawer>

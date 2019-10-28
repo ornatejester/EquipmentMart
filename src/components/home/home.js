@@ -8,7 +8,7 @@ import classnames from 'classnames'
 import Mart from '../content/mart';
 // 测试
 import ShopCar from '../content/shopCar';
-import MyOrder from '../content/shopCarTest';
+import MyOrder from '../content/myOrder';
 
 import {connect} from 'react-redux';
 import {toggleSidebar} from '../../store/LayoutState';

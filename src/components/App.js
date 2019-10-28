@@ -13,7 +13,6 @@ function App() {
           <Route path='/index' component={Home} />
           <Route path='/login' component={Login}/>
           <Route exact path="/" render={() => <Redirect to="/index/mart" />} />
-          
           <Redirect to='/index'/>
         </Switch>
       </BrowserRouter>
