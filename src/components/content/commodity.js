@@ -14,6 +14,7 @@ import {doBuyCommodity} from '../../store/ShopCarState';
 import {createOrderDirect} from '../../store/MyOrderState';
 import {toggleToCarMsg,toggleCreateOrderMsg} from '../../store/MessageState';
 import {actionCreator,orderActionCreator} from '../../storeAction';
+import { Divider } from '@material-ui/core';
 const useStyles = makeStyles({
   card: {
     maxWidth: 345,
@@ -25,6 +26,7 @@ const useStyles = makeStyles({
   },
   intro:{
     height:40,
+    paddingTop:5,
     textAlign:'left'
   }
 });
@@ -49,6 +51,7 @@ const useStyles = makeStyles({
           <Typography gutterBottom variant="h5" component="h2">
             {props.name}
           </Typography>
+          <Divider></Divider>
           <Typography className={classes.intro}  variant="body2" color="textSecondary" component="p">
             {props.intro}
           </Typography>

@@ -27,7 +27,7 @@ function Mart({classes,toCarSuccess,createOrderSuccess}) {
       <PositionedSnackbar open={createOrderSuccess} message={"购买成功，请在订单中查看"}></PositionedSnackbar>
       <Typography variant="h5" component="h4" className={classes.title}>
            商品列表
-    </Typography>
+      </Typography>
     <div className={classes.root}>
         {commodityList.map((com,index) => 
         <div className={classes.card} key={index} >
@@ -49,8 +49,9 @@ const styles = theme => ({
     textAlign:'center'
   },
   card:{
-    width:'20%',
-    paddingLeft:10,
+    width:'25%',
+    paddingLeft:25,
+    paddingRight:25,
     paddingTop:20
   },
   title:{

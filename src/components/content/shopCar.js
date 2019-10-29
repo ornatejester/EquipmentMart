@@ -102,7 +102,7 @@ function ShopCar(
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="left">选中购买</StyledTableCell>
+            <StyledTableCell align="left"></StyledTableCell>
             <StyledTableCell align="left">装备名称</StyledTableCell>
             <StyledTableCell align="center">装备编号</StyledTableCell>
             <StyledTableCell align="center">装备价格</StyledTableCell>
@@ -121,7 +121,7 @@ function ShopCar(
                   }else{
                       wareHouse.pop(commodity);
                   }
-                }}/>:index+1
+                }}/>:<></>
             }
                 
               </StyledTableCell>

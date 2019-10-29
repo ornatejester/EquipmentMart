@@ -42,7 +42,7 @@ export const toggleNoSelectMsg = () => dispatch =>{
         dispatch(select())}
         ,1000);
 }
-
+// Message
 export default function MessageState(state = initialState, message) {
     switch (message.type) {
         case TOCAR_MSG:
