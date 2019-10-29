@@ -3,9 +3,7 @@ import Commodity from './commodity';
 import { withStyles } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import {connect} from 'react-redux';
-
 import PositionedSnackbar from './message';
-// import {toCarMessage} from '../../store/MessageState'
 const commodityList = [
   {id:1138,name:'破军',intro:'大量增加攻击力',price:320},
   {id:1128,name:'冰霜长茅',intro:'普通攻击会减少目标攻速和移速，远程英雄为1s',price:220},
@@ -24,12 +22,10 @@ const commodityList = [
 
 
 
-function Mart({classes,toCarSuccess,createOrderSuccess}) {
-  // console.log(toCarSuccess);
+function Mart({classes,toCarSuccess}) {
   return (
     <React.Fragment> 
       <PositionedSnackbar open={toCarSuccess} message={"加入购物车成功"}></PositionedSnackbar>
-      <PositionedSnackbar open={createOrderSuccess} message={"购买成功！请到订单中查看"}></PositionedSnackbar>
       <Typography variant="h5" component="h4" className={classes.title}>
            商品列表
     </Typography>
@@ -66,6 +62,5 @@ const styles = theme => ({
 export default connect(
   state=>({
     toCarSuccess:state.message.toCarIsSuccess,
-    createOrderSuccess:state.message.createOrderSuccess
   })
 )(withStyles(styles)(Mart));

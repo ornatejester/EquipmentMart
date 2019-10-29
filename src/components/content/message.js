@@ -1,9 +1,5 @@
 import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
-
-
-
-
  function PositionedSnackbar({...props}) {
   return (
     <div>
@@ -23,6 +19,5 @@ import Snackbar from '@material-ui/core/Snackbar';
     </div>
   );
 }
-
 
 export default PositionedSnackbar;

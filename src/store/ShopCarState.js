@@ -38,7 +38,7 @@ export const initialState = {
         dispatch(action);
 }
   
-  export default function OrderReducer(state = initialState, commodity) {
+  export default function ShopReducer(state = initialState, commodity) {
     switch (commodity.type) {
       case TOCAR:
           const commodityNew={

@@ -12,7 +12,7 @@ import {connect} from 'react-redux';
 
 import {doBuyCommodity} from '../../store/ShopCarState';
 import {createOrderDirect} from '../../store/MyOrderState';
-import {toggleCreateOrder,toggleToCar} from '../../store/MessageState'
+import {toggleToCarMsg} from '../../store/MessageState'
 import {actionCreator,orderActionCreator} from '../../storeAction';
 const useStyles = makeStyles({
   card: {
@@ -33,8 +33,7 @@ const useStyles = makeStyles({
    doBuyCommodity,
    isSidebarOpened,
    createOrderDirect,
-   toggleCreateOrder,
-   toggleToCar,
+   toggleToCarMsg,
    ...props}) {
   const classes = useStyles();
   return (
@@ -57,13 +56,12 @@ const useStyles = makeStyles({
       <CardActions>
         <Button size="small" color="primary" onClick={()=>{
             doBuyCommodity(actionCreator('TOCAR',props));
-            // toggleToCar()
+            toggleToCarMsg()
           }}>
           加入购物车
         </Button>
         <Button size="small" color="primary" onClick={()=>{
             createOrderDirect(orderActionCreator('CREATE_ORDER_DIRECT',[props]));
-            // toggleCreateOrder();
           }}>
           立即购买
         </Button>
@@ -82,7 +80,6 @@ export default connect(
   {
     doBuyCommodity,
     createOrderDirect,
-    toggleToCar,
-    toggleCreateOrder
+    toggleToCarMsg,
   }
 )(MediaCard)

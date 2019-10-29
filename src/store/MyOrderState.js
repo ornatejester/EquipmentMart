@@ -1,4 +1,3 @@
-// import {toggleCreateOrder}  from './MessageState'
 export const initialState = {
     // 所有订单
     orderList:[],
@@ -11,11 +10,12 @@ const CREATE_ORDER_DIRECT="CREATE_ORDER_DIRECT";
 export const createOrder = (action) => dispatch =>{
     dispatch(action);
 }
-// 商城页面直接生成订单
+// 单个项目生成订单
 export const createOrderDirect = (action) => dispatch =>{
     dispatch(action);
 }
-export default function ShopReducer(state = initialState, commodity) {
+
+export default function OrderReducer(state = initialState, commodity) {
 switch (commodity.type) {
     case CREATE_ORDER:
         return {
@@ -23,7 +23,6 @@ switch (commodity.type) {
             orderList:[...state.orderList,commodity.order]
         };
     case CREATE_ORDER_DIRECT:
-        // console.log(state);
         return {
              ...state,
              orderList:[...state.orderList,commodity.order]

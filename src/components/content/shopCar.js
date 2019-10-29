@@ -16,7 +16,7 @@ import {toggleSelect} from '../../store/LayoutState';
 
 import {actionCreator,orderActionCreator} from '../../storeAction';
 import PositionedSnackbar from './message';
-import {toggleNoSelect,toggleCreateOrder} from '../../store/MessageState'
+import {toggleNoSelectMsg,toggleCreateOrderMsg} from '../../store/MessageState'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -63,13 +63,12 @@ function ShopCar(
     toggleSelect,
     noSelectCommedity,
     createOrderSuccess,
-    toggleNoSelect,
-    toggleCreateOrder}
+    toggleNoSelectMsg,
+    toggleCreateOrderMsg}
   ) {
   const classes = useStyles();
   //临时存放多选框被选中的商品
   let wareHouse = [];
-  
   return (
     <React.Fragment>
       <PositionedSnackbar open={noSelectCommedity} message={"请先选择物品"}></PositionedSnackbar>
@@ -87,11 +86,13 @@ function ShopCar(
           if(wareHouse.length>0){
             createOrder(orderActionCreator("CREATE_ORDER",wareHouse));
             reduceOrder(actionCreator("REDUCER_ORDER",wareHouse));
-            // toggleCreateOrder();
+            // 显示提示信息
+            toggleCreateOrderMsg();
+            // 隐藏选择框
             toggleSelect();
             wareHouse = [];
           }else{
-            toggleNoSelect();
+            toggleNoSelectMsg();
           }
         }}>
         立即购买
@@ -133,8 +134,8 @@ function ShopCar(
               <Button color='primary'
               onClick={()=>{
                 // 添加到订单，移出购物车
-                createOrderDirect(orderActionCreator('CREATE_ORDER_DIRECT',[commodity]))
-                doRemoveCommodity(actionCreator('REMOVE',commodity))
+                createOrderDirect(orderActionCreator('CREATE_ORDER_DIRECT',[commodity]));
+                doRemoveCommodity(actionCreator('REMOVE',commodity));
               }}
               >立即购买</Button>
               <Button color='secondary' 
@@ -162,8 +163,8 @@ export default connect(
     reduceOrder,
     createOrder,
     createOrderDirect,
-    toggleCreateOrder,
     toggleSelect,
-    toggleNoSelect
+    toggleNoSelectMsg,
+    toggleCreateOrderMsg,
   }
 )(ShopCar)

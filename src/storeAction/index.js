@@ -10,7 +10,7 @@ export const actionCreator = (type, argNames) => {
 // 订单的action创建
 export const orderActionCreator = (type, argNames) => {
     const date = new Date();
-    const fullDate = date.toLocaleDateString();
+    const fullDate = date.toLocaleDateString()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
     const action = { 
         type,
         order:{} 
@@ -21,10 +21,3 @@ export const orderActionCreator = (type, argNames) => {
     return action;
 };
 
-// 消息action创建
-export const messageActionCreator = (type) => {
-    const action = { 
-        type
-    };
-    return action;
-};

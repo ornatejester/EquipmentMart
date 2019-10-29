@@ -72,7 +72,7 @@ const sumMoney=function(arr){
           <TableRow>
             <StyledTableCell>订单详情</StyledTableCell>
             <StyledTableCell align="center">订单编号</StyledTableCell>
-            <StyledTableCell align="right">金额</StyledTableCell>
+            <StyledTableCell align="right">订单金额</StyledTableCell>
             <StyledTableCell align="right">创建时间</StyledTableCell>
             <StyledTableCell align="right">查看物流</StyledTableCell>
           </TableRow>
