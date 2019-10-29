@@ -13,10 +13,7 @@ export const initialState = {
     type: SHOW_SELECT,
   })
   export default function LoginReducer(state = initialState, { type, payload }) {
-    // console.log('layout',state);
-    
     switch (type) {
-      
       case TOGGLE_SIDEBAR:
         return {
           ...state,

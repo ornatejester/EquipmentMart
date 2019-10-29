@@ -29,7 +29,6 @@ export const initialState = {
   }
 
   export const doBuyCommodity = (action) => dispatch => {
-    // console.log(action);
         dispatch(action);
   }
   export const doRemoveCommodity = (action) => dispatch => {
@@ -40,8 +39,6 @@ export const initialState = {
 }
   
   export default function ShopReducer(state = initialState, commodity) {
-    // console.log('shop',state);
-    
     switch (commodity.type) {
       case TOCAR:
           const commodityNew={

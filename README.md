@@ -1,5 +1,16 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## 添加购物车操作
+
+#### 在商城页面点击添加购物车按钮之后，商品会被直接添加到购物车中
+#### 在购物车中点击移除按钮，商品会被移出购物车
+
+## 购买商品操作
+
+#### 在商城点击购买按钮之后，商品会直接被添加到订单中
+#### 在购物车中点击购买之后，商品会直接被添加到订单中
+#### 在购物车中点击编辑按钮，可以批量的购买商品，所有商品生成一个订单
+
 ## Available Scripts
 
 In the project directory, you can run:
