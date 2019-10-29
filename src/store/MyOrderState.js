@@ -16,6 +16,8 @@ export const createOrderDirect = (action) => dispatch =>{
 }
 
 export default function OrderReducer(state = initialState, commodity) {
+    // console.log('order',state);
+    
 switch (commodity.type) {
     case CREATE_ORDER:
         return {

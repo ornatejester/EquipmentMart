@@ -136,6 +136,7 @@ function ShopCar(
                 // 添加到订单，移出购物车
                 createOrderDirect(orderActionCreator('CREATE_ORDER_DIRECT',[commodity]));
                 doRemoveCommodity(actionCreator('REMOVE',commodity));
+                toggleCreateOrderMsg();
               }}
               >立即购买</Button>
               <Button color='secondary' 

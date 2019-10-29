@@ -20,12 +20,11 @@ const commodityList = [
   {id:11311,name:'名刀司命',intro:'在自己生命值较低的时候，减少收到的伤害',price:240},
 ]
 
-
-
-function Mart({classes,toCarSuccess}) {
+function Mart({classes,toCarSuccess,createOrderSuccess}) {
   return (
     <React.Fragment> 
       <PositionedSnackbar open={toCarSuccess} message={"加入购物车成功"}></PositionedSnackbar>
+      <PositionedSnackbar open={createOrderSuccess} message={"购买成功，请在订单中查看"}></PositionedSnackbar>
       <Typography variant="h5" component="h4" className={classes.title}>
            商品列表
     </Typography>
@@ -62,5 +61,6 @@ const styles = theme => ({
 export default connect(
   state=>({
     toCarSuccess:state.message.toCarIsSuccess,
+    createOrderSuccess:state.message.createOrderSuccess
   })
 )(withStyles(styles)(Mart));

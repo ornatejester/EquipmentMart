@@ -6,7 +6,6 @@ import Header from './header';
 import Sidebar from './sidebar';
 import classnames from 'classnames'
 import Mart from '../content/mart';
-// 测试
 import ShopCar from '../content/shopCar';
 import MyOrder from '../content/myOrder';
 
@@ -62,7 +61,6 @@ const styles = theme => ({
       ...theme.mixins.toolbar,
     }
   });
-
 export default connect(
   state=>({
       isSidebarOpened:state.layout.isSidebarOpened
