@@ -12,11 +12,11 @@ import { Button, Checkbox } from '@material-ui/core';
 
 import {doRemoveCommodity,reduceOrder} from '../../store/ShopCarState';
 import {createOrder,createOrderDirect} from '../../store/MyOrderState';
-import {toggleSelect} from '../../store/LayoutState';
+import {toggleSelect,toggleShopButton} from '../../store/LayoutState';
 
 import {actionCreator,orderActionCreator} from '../../storeAction';
 import PositionedSnackbar from './message';
-import {toggleNoSelectMsg,toggleCreateOrderMsg} from '../../store/MessageState'
+import {toggleNoSelectMsg,toggleCreateOrderMsg,toggleRemoveSuccessMsg} from '../../store/MessageState';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -55,6 +55,7 @@ const useStyles = makeStyles(theme => ({
 
 function ShopCar(
   {isSelectShow,
+    isShopButtonShow,
     myCommodity,
     createOrder,
     createOrderDirect,
@@ -63,8 +64,11 @@ function ShopCar(
     toggleSelect,
     noSelectCommedity,
     createOrderSuccess,
+    removeSuccess,
     toggleNoSelectMsg,
-    toggleCreateOrderMsg}
+    toggleCreateOrderMsg,
+    toggleRemoveSuccessMsg,
+    toggleShopButton}
   ) {
   const classes = useStyles();
   //临时存放多选框被选中的商品
@@ -73,30 +77,57 @@ function ShopCar(
     <React.Fragment>
       <PositionedSnackbar open={noSelectCommedity} message={"请先选择物品"}></PositionedSnackbar>
       <PositionedSnackbar open={createOrderSuccess} message={"购买成功！请到订单中查看"}></PositionedSnackbar>
+      <PositionedSnackbar open={removeSuccess} message={"移除成功"}></PositionedSnackbar>
       <Typography variant="h5" component="h4">
             我的购物车
       <Button color="primary" 
       className={classes.button}
-      onClick={toggleSelect}>
+      onClick={()=>{
+        toggleSelect();
+        toggleShopButton();
+      }}>
         批量编辑
       </Button>
-      <Button variant="contained" color="secondary" 
-      className={classes.button}
-      onClick={()=>{
-          if(wareHouse.length>0){
-            createOrder(orderActionCreator("CREATE_ORDER",wareHouse));
-            reduceOrder(actionCreator("REDUCER_ORDER",wareHouse));
-            // 显示提示信息
-            toggleCreateOrderMsg();
-            // 隐藏选择框
-            toggleSelect();
-            wareHouse = [];
-          }else{
-            toggleNoSelectMsg();
-          }
-        }}>
-        立即购买
-      </Button>
+      {isShopButtonShow?
+      <>
+       <Button variant="contained" color="secondary" 
+       className={classes.button}
+       onClick={()=>{
+           if(wareHouse.length>0){
+             createOrder(orderActionCreator("CREATE_ORDER",wareHouse));
+             reduceOrder(actionCreator("REDUCER_ORDER",wareHouse));
+             // 显示提示信息
+             toggleCreateOrderMsg();
+             // 隐藏选择框
+             // 隐藏按钮  
+             toggleSelect();
+             toggleShopButton();
+             wareHouse = [];
+           }else{
+             toggleNoSelectMsg();
+           }
+         }}>
+         立即购买
+       </Button>
+       <Button variant="contained" color="secondary" 
+       className={classes.button}
+       onClick={()=>{
+           if(wareHouse.length>0){
+             reduceOrder(actionCreator("REDUCER_ORDER",wareHouse));
+             toggleRemoveSuccessMsg();
+             toggleSelect();
+             toggleShopButton();
+             wareHouse = [];
+           }else{
+             toggleNoSelectMsg();
+           }
+         }}>
+         移除商品
+       </Button>
+       </>
+       :<></>
+    }
+     
       </Typography>
     <Paper className={classes.root}>
       <Table className={classes.table} aria-label="customized table">
@@ -141,7 +172,8 @@ function ShopCar(
               >立即购买</Button>
               <Button color='secondary' 
               onClick={()=>{
-                doRemoveCommodity(actionCreator('REMOVE',commodity))
+                doRemoveCommodity(actionCreator('REMOVE',commodity));
+                toggleRemoveSuccessMsg();
               }}>移出购物车</Button>
               </StyledTableCell>
             </StyledTableRow>
@@ -155,9 +187,11 @@ function ShopCar(
 export default connect(
   state=>({
     myCommodity:state.shop.myCommodity,
-    isSelectShow:state.layout.isSelectShow,
     noSelectCommedity:state.message.noSelectCommedity,
-    createOrderSuccess:state.message.createOrderSuccess
+    createOrderSuccess:state.message.createOrderSuccess,
+    isSelectShow:state.layout.isSelectShow,
+    isShopButtonShow:state.layout.isShopButtonShow,
+    removeSuccess:state.message.removeSuccess
   }),
   {
     doRemoveCommodity,
@@ -167,5 +201,7 @@ export default connect(
     toggleSelect,
     toggleNoSelectMsg,
     toggleCreateOrderMsg,
+    toggleShopButton,
+    toggleRemoveSuccessMsg
   }
 )(ShopCar)

@@ -2,9 +2,10 @@ export const initialState = {
     myCommodity: [
         {number:0,id:1138,name:'冰霜长茅',intro:'普通攻击会减少目标攻速和移速，远程英雄为1s',price:220},
     ],
-  };
+    
   // 用作用于购物车商品的唯一标识符;
-  var commodityNumber=1;
+    number:1
+  };
 
   export const TOCAR = "TOCAR";
   export const REMOVE = "REMOVE";
@@ -43,12 +44,13 @@ export const initialState = {
       case TOCAR:
           const commodityNew={
             ...commodity.commodity,
-            number:commodityNumber
+            number:state.number
           };
-          commodityNumber++;
+          // console.log(state.number);
         return {
           ...state,
-          myCommodity:[...state.myCommodity,commodityNew]
+          myCommodity:[...state.myCommodity,commodityNew],
+          number:state.number+1
         };
       case REMOVE:
         return {
